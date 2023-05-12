@@ -1,15 +1,6 @@
 <template>
-  <!-- <div>
-    <a href="https://vitejs.dev" target="_blank">
-      <img src="/vite.svg" class="logo" alt="Vite logo" />
-    </a>
-    <a href="https://vuejs.org/" target="_blank">
-      <img src="./assets/vue.svg" class="logo vue" alt="Vue logo" />
-    </a>
-  </div>
-  <HelloWorld msg="Vite + Vue" /> -->
   <el-form :model="form" label-width="120px">
-    <el-form-item label="name">
+    <!-- <el-form-item label="name">
       <el-input v-model="form.name" />
     </el-form-item>
     <el-form-item label="password">
@@ -20,6 +11,13 @@
         <el-input  v-model="form.code" />
         <img @click="resetCode" :src="codeUrl" alt="">
       </div>
+    </el-form-item> -->
+
+    <el-form-item label="name">
+      <el-input v-model="form.name" />
+    </el-form-item>
+    <el-form-item label="password">
+      <el-input-number v-model="form.age" show-password/>
     </el-form-item>
     <el-form-item>
       <el-button type="primary" @click="onSubmit">login</el-button>
@@ -30,7 +28,6 @@
 
 <script setup lang="ts">
 import { reactive, ref } from 'vue'
-// import HelloWorld from './components/HelloWorld.vue'
 
 const form = reactive({name: 'admin', password: '000000', code: ''})
 
@@ -41,7 +38,7 @@ function resetCode() {
 }
 
 function onSubmit() {
-  fetch('api/user/login', {
+  fetch('api/user', {
     method: 'post',
     headers: {
       'content-type': 'application/json'
