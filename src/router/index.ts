@@ -1,10 +1,11 @@
 import * as VueRouter from 'vue-router'
 import login from '@/pages/login.vue'
+import about from '@/pages/about.vue'
 
 
 const routes = [
   { path: '/login', component: login },
-  // { path: '/about', component: About },
+  { path: '/about', component: about, name: 'about' },
 ]
 
 const router = VueRouter.createRouter({
@@ -17,7 +18,7 @@ router.beforeEach((to, form, next) => {
   if (to.path === '/login') {
     next()
   } else if (to.path !== '/login') {
-    next({path: '/login'})
+    next()
   }
 })
 

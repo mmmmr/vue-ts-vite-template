@@ -18,9 +18,10 @@
 
 <script setup lang="ts" name="login">
 import { reactive, ref, onMounted } from 'vue'
-import { login, getMenuList, getUserInfo } from '@/api/system/login.js'
+import { useRouter } from 'vue-router'
+import { login } from '@/api/system/login.js'
 import { ElMessage } from 'element-plus'
-import vSession from '@/utils/vSession'
+import { useUserInfoStore } from '@/store/modules/user.ts'
 
 interface loginData {
   token: string
@@ -50,6 +51,9 @@ onMounted(() => {
   loadImg()
 })
 
+const userInfoStore = useUserInfoStore()
+
+const router = useRouter()
 
 const onSubmit = () => {
   formRef.value.validate(async (v:boolean) => {
@@ -57,9 +61,8 @@ const onSubmit = () => {
       try{
         const data = await login(form)
         const { token } = data as loginData
-        vSession.set('token', token)
-        await getMenuList()
-        await getUserInfo()
+        userInfoStore.login(token)
+        router.push('/about')
       } catch(e) {
         ElMessage({
           message: <string>e,
