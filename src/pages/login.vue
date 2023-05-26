@@ -62,7 +62,7 @@ const onSubmit = () => {
         const data = await login(form)
         const { token } = data as loginData
         userInfoStore.login(token)
-        router.push('/about')
+        router.push('/layout')
       } catch(e) {
         ElMessage({
           message: <string>e,

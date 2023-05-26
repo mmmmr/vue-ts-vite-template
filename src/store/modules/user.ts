@@ -35,7 +35,7 @@ export const useUserInfoStore = defineStore('user', () => {
     token.value = t
     vSession.set('token', token.value)
     await getInfo()
-    await getMenu()
+    // await getMenu()
   }
 
   function getInfo() {

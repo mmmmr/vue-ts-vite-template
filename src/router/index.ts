@@ -1,6 +1,6 @@
 import * as VueRouter from 'vue-router'
 import login from '@/pages/login.vue'
-import about from '@/pages/about.vue'
+import layout from '@/pages/layout/index.vue'
 import { getToken } from '@/utils/vv'
 import {useUserStoreWithOut} from '@/store/modules/user'
 import NProgress from 'nprogress'
@@ -10,8 +10,8 @@ import { ElMessageBox } from 'element-plus'
 
 const routes = [
   { path: '/login', component: login, name: 'login' },
-  { path: '/about', component: about, name: 'about' },
-  { path: '/', redirect: '/about' }// 重定向到指定页面
+  { path: '/layout', component: layout, name: 'layout' },
+  { path: '/', redirect: '/layout' }// 重定向到指定页面
 ]
 
 const router = VueRouter.createRouter({
