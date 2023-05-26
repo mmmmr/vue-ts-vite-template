@@ -29,6 +29,8 @@ export const useUserInfoStore = defineStore('user', () => {
 
   const menuList = ref([])
 
+  const perList = ref([])
+
   async function login(t: string) {
     token.value = t
     vSession.set('token', token.value)
@@ -53,7 +55,9 @@ export const useUserInfoStore = defineStore('user', () => {
     return new Promise(
       (resolve, reject) => {
         getMenuList().then(res => {
-          menuList.value = res as []
+          const {menus, perms} = res as any
+          menuList.value = menus
+          perList.value = perms
           resolve(res)
         }).catch(err => {
           reject(err)
@@ -62,6 +66,16 @@ export const useUserInfoStore = defineStore('user', () => {
     )
   }
 
+  function clearMenu() {
+    menuList.value = []
+    perList.value = []
+  }
 
-  return { userInfo, token, login, getInfo, getMenu, menuList }
+
+  return { userInfo, token, login, getInfo, getMenu, menuList, perList, clearMenu }
 })
+
+// Need to be used outside the setup
+export function useUserStoreWithOut() {
+  return useUserInfoStore(store);
+}

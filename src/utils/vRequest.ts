@@ -1,5 +1,5 @@
 import axios, { Method, AxiosInstance, InternalAxiosRequestConfig, AxiosResponse}  from "axios";
-import vSession from './vSession'
+import { getToken } from "./vv";
 
 export interface RequestResponse<T = unknown> {
   data: T,
@@ -19,7 +19,7 @@ export class VRequest {
 
     this.r.interceptors.request.use(
       (config: InternalAxiosRequestConfig) => {
-        const token = vSession.get('token')
+        const token = getToken()
         if (token) {
           config.headers['Authorization'] = token
         }
