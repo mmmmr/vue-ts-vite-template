@@ -31,6 +31,8 @@ export const useUserInfoStore = defineStore('user', () => {
 
   const perList = ref([])
 
+  const routeList = ref([])
+
   async function login(t: string) {
     token.value = t
     vSession.set('token', token.value)
@@ -38,6 +40,7 @@ export const useUserInfoStore = defineStore('user', () => {
     // await getMenu()
   }
 
+  // 获取用户信息
   function getInfo() {
     return new Promise(
       (resolve, reject) => {
@@ -51,6 +54,7 @@ export const useUserInfoStore = defineStore('user', () => {
     )
   }
 
+  // 获取菜单&权限
   function getMenu() {
     return new Promise(
       (resolve, reject) => {
@@ -58,6 +62,7 @@ export const useUserInfoStore = defineStore('user', () => {
           const {menus, perms} = res as any
           menuList.value = menus
           perList.value = perms
+          formatMenuToRoute(menus)
           resolve(res)
         }).catch(err => {
           reject(err)
@@ -66,13 +71,26 @@ export const useUserInfoStore = defineStore('user', () => {
     )
   }
 
+  // 清空菜单&权限
   function clearMenu() {
     menuList.value = []
     perList.value = []
   }
 
+  type idType = string | number
+  type menuDatType = idType | boolean
+  type menuObj = Record<string, menuDatType>
+  function formatMenuToRoute(menuList:[menuObj]) {
+    const menuMap:Record<idType, {}> = {}
+    menuList.forEach(it => {
+      const label = it.id as string | number
+      return menuMap[label] = it
+    })
+    console.log(menuMap)
+  }
 
-  return { userInfo, token, login, getInfo, getMenu, menuList, perList, clearMenu }
+
+  return { userInfo, token, login, getInfo, getMenu, menuList, perList, clearMenu, routeList }
 })
 
 // Need to be used outside the setup
